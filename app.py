@@ -240,84 +240,56 @@ with tab_guide:
     col_g1, col_g2 = st.columns(2, gap="large")
 
     with col_g1:
-        st.markdown("""
-        <div class="guide-card">
-            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #38BDF8; margin-bottom: 8px;">
-                1. Ushbu Tizim Nima?
-            </div>
-            <p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; margin-bottom: 12px;">
-                Ushbu loyiha Spotify musiqa platformasidagi <strong>32,828 ta haqiqiy treklar</strong> ma'lumotlar to'plami asosida yaratilgan. Har bir qo'shiqning raqsbopligi (danceability), energiyasi (energy), ovoz balandligi (loudness), akustikligi va reliz yili kabi 14 ta belgisi o'rganilib, qo'shiqning <strong>Hit (mashhur: Popularity &ge; 50)</strong> bo'lish ehtimoli bashorat qilinadi.
-            </p>
-            <p style="font-size: 0.88rem; color: #94A3B8; line-height: 1.6;">
-                Tizimda <strong>LightGBM</strong> va <strong>XGBoost</strong> gradient boosting algoritmlari taqqoslangan, daraxt barglari soni (<code>num_leaves</code>) bo'yicha overfitting chegarasi aniqlangan hamda <strong>Optuna</strong> (Bayesian optimization) orqali eng optimal parametrlar topilgan.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="guide-card">
-            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #34D399; margin-bottom: 8px;">
-                3. Akustik Ko'rsatkichlar Izohi
-            </div>
-            <ul style="font-size: 0.85rem; color: #CBD5E1; line-height: 1.7; padding-left: 18px; margin: 0;">
-                <li><strong>Danceability (0 - 1.0):</strong> Qo'shiqning raqsga tushishga qulaylik darajasi (ritm, temp va barqarorlik).</li>
-                <li><strong>Energy (0 - 1.0):</strong> Treklardagi tezlik, intensivlik va shovqin miqdori.</li>
-                <li><strong>Loudness (-30 dan 1 dB):</strong> Umumiy ovoz balandligi. Odatda zamonaviy xitlar -6 dB dan balandroq bo'ladi.</li>
-                <li><strong>Valence (0 - 1.0):</strong> Musiqiy kayfiyat. Yuqori qiymat shodlik va optimizmni, past qiymat esa g'amginlikni anglatadi.</li>
-                <li><strong>Acousticness (0 - 1.0):</strong> Trekda akustik asboblar ustunligi (elektron asboblarga qarama-qarshi).</li>
-                <li><strong>Tempo (BPM):</strong> Trekning daqiqadagi zarbalar soni (Beats Per Minute).</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div class="guide-card">
+<div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #38BDF8; margin-bottom: 8px;">1. Ushbu Tizim Nima?</div>
+<p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; margin-bottom: 12px;">
+Ushbu loyiha Spotify musiqa platformasidagi <strong>32,828 ta haqiqiy treklar</strong> ma'lumotlar to'plami asosida yaratilgan. Har bir qo'shiqning raqsbopligi (danceability), energiyasi (energy), ovoz balandligi (loudness), akustikligi va reliz yili kabi 14 ta belgisi o'rganilib, qo'shiqning <strong>Hit (mashhur: Popularity &ge; 50)</strong> bo'lish ehtimoli bashorat qilinadi.
+</p>
+<p style="font-size: 0.88rem; color: #94A3B8; line-height: 1.6; margin: 0;">
+Tizimda <strong>LightGBM</strong> va <strong>XGBoost</strong> gradient boosting algoritmlari taqqoslangan, daraxt barglari soni (<code>num_leaves</code>) bo'yicha overfitting chegarasi aniqlangan hamda <strong>Optuna</strong> (Bayesian optimization) orqali eng optimal parametrlar topilgan.
+</p>
+</div>
+<div class="guide-card">
+<div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #34D399; margin-bottom: 8px;">3. Akustik Ko'rsatkichlar Izohi</div>
+<ul style="font-size: 0.85rem; color: #CBD5E1; line-height: 1.7; padding-left: 18px; margin: 0;">
+<li><strong>Danceability (0 - 1.0):</strong> Qo'shiqning raqsga tushishga qulaylik darajasi (ritm, temp va barqarorlik).</li>
+<li><strong>Energy (0 - 1.0):</strong> Treklardagi tezlik, intensivlik va shovqin miqdori.</li>
+<li><strong>Loudness (-30 dan 1 dB):</strong> Umumiy ovoz balandligi. Odatda zamonaviy xitlar -6 dB dan balandroq bo'ladi.</li>
+<li><strong>Valence (0 - 1.0):</strong> Musiqiy kayfiyat. Yuqori qiymat shodlik va optimizmni, past qiymat esa g'amginlikni anglatadi.</li>
+<li><strong>Acousticness (0 - 1.0):</strong> Trekda akustik asboblar ustunligi (elektron asboblarga qarama-qarshi).</li>
+<li><strong>Tempo (BPM):</strong> Trekning daqiqadagi zarbalar soni (Beats Per Minute).</li>
+</ul>
+</div>""", unsafe_allow_html=True)
 
     with col_g2:
-        st.markdown("""
-        <div class="guide-card">
-            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #F59E0B; margin-bottom: 12px;">
-                2. Qadam-baqadam Foydalanish Yo'riqnomasi
-            </div>
-            
-            <div style="margin-bottom: 14px;">
-                <span class="step-number">1</span>
-                <strong style="color: #F8FAFC; font-size: 0.88rem;">Modelni tanlang:</strong>
-                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
-                    Chap paneldagi <em>"Active Estimator"</em> orqali <strong>Optuna-Tuned LightGBM</strong> (eng aniq: 70.1% Acc, 0.770 AUC), <strong>XGBoost</strong> yoki <strong>Baseline LightGBM</strong> ni faollashtiring.
-                </p>
-            </div>
-
-            <div style="margin-bottom: 14px;">
-                <span class="step-number">2</span>
-                <strong style="color: #F8FAFC; font-size: 0.88rem;">Parametrlarni kiriting yoki Blueprint tanlang:</strong>
-                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
-                    <em>"Jonli Bashorat"</em> sahifasiga o'tib, tayyor shablonni (masalan: <em>Viral Pop Anthem</em>, <em>Club EDM Peak</em>) tanlang yoki slayderlar orqali o'z trekingiz qiymatlarini belgilang.
-                </p>
-            </div>
-
-            <div style="margin-bottom: 14px;">
-                <span class="step-number">3</span>
-                <strong style="color: #F8FAFC; font-size: 0.88rem;">Natijani tekshiring:</strong>
-                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
-                    O'ng paneldagi <em>"Inference Result"</em> kartasida model qo'shiqning Hit bo'lish foizini hisoblaydi (&ge;50% bo'lsa <strong>HIT CANDIDATE</strong> statusi beriladi).
-                </p>
-            </div>
-
-            <div style="margin-bottom: 14px;">
-                <span class="step-number">4</span>
-                <strong style="color: #F8FAFC; font-size: 0.88rem;">Modellar tahlilini ko'ring:</strong>
-                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
-                    <em>"Modellar Benchmarki"</em> va <em>"Overfitting Lab"</em> bo'limlariga o'tib, metrikalar, o'qitish tezligi (soniyada) va overfitting grafiklarini o'rganing.
-                </p>
-            </div>
-
-            <div>
-                <span class="step-number">5</span>
-                <strong style="color: #F8FAFC; font-size: 0.88rem;">Jupyter Notebook (practise.ipynb):</strong>
-                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
-                    Loyiha papkasida <code>practise.ipynb</code> fayli mavjud. Unda barcha hisoblashlar, o'qitish skriptlari va chizmalar to'liq saqlangan bo'lib, mustaqil qayta ishga tushirish mumkin.
-                </p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div class="guide-card">
+<div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #F59E0B; margin-bottom: 14px;">2. Qadam-baqadam Foydalanish Yo'riqnomasi</div>
+<div style="margin-bottom: 14px;">
+<span class="step-number">1</span>
+<strong style="color: #F8FAFC; font-size: 0.88rem;">Modelni tanlang:</strong>
+<p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">Chap paneldagi <em>"Active Estimator"</em> orqali <strong>Optuna-Tuned LightGBM</strong> (eng aniq: 70.1% Acc, 0.770 AUC), <strong>XGBoost</strong> yoki <strong>Baseline LightGBM</strong> ni faollashtiring.</p>
+</div>
+<div style="margin-bottom: 14px;">
+<span class="step-number">2</span>
+<strong style="color: #F8FAFC; font-size: 0.88rem;">Parametrlarni kiriting yoki Blueprint tanlang:</strong>
+<p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;"><em>"Jonli Bashorat"</em> sahifasiga o'tib, tayyor shablonni (masalan: <em>Viral Pop Anthem</em>, <em>Club EDM Peak</em>) tanlang yoki slayderlar orqali o'z trekingiz qiymatlarini belgilang.</p>
+</div>
+<div style="margin-bottom: 14px;">
+<span class="step-number">3</span>
+<strong style="color: #F8FAFC; font-size: 0.88rem;">Natijani tekshiring:</strong>
+<p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">O'ng paneldagi <em>"Inference Result"</em> kartasida model qo'shiqning Hit bo'lish foizini hisoblaydi (&ge;50% bo'lsa <strong>HIT CANDIDATE</strong> statusi beriladi).</p>
+</div>
+<div style="margin-bottom: 14px;">
+<span class="step-number">4</span>
+<strong style="color: #F8FAFC; font-size: 0.88rem;">Modellar tahlilini ko'ring:</strong>
+<p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;"><em>"Modellar Benchmarki"</em> va <em>"Overfitting Lab"</em> bo'limlariga o'tib, metrikalar, o'qitish tezligi (soniyada) va overfitting grafiklarini o'rganing.</p>
+</div>
+<div>
+<span class="step-number">5</span>
+<strong style="color: #F8FAFC; font-size: 0.88rem;">Jupyter Notebook (practise.ipynb):</strong>
+<p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">Loyiha papkasida <code>practise.ipynb</code> fayli mavjud. Unda barcha hisoblashlar, o'qitish skriptlari va chizmalar to'liq saqlangan bo'lib, mustaqil qayta ishga tushirish mumkin.</p>
+</div>
+</div>""", unsafe_allow_html=True)
 
 # -------------------------------------------------------------
 # TAB 1: LIVE INFERENCE (JONLI BASHORAT)
