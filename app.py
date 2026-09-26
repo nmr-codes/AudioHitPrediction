@@ -404,59 +404,51 @@ with tab_predict:
         status_badge = f'<span class="badge-hit">HIT CANDIDATE</span>' if is_hit else f'<span class="badge-miss">SUB-THRESHOLD</span>'
         bar_color = "#10B981" if is_hit else "#EF4444"
 
-        st.markdown(f"""
-        <div class="metric-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <span class="metric-title">Bashorat Statusi</span>
-                {status_badge}
-            </div>
-            <div class="metric-value">{prob_hit:.1%}</div>
-            <div class="metric-sub">Hit Bo'lish Ehtimoli (Chegara: 50.0%)</div>
-            <div class="prob-track">
-                <div class="prob-fill" style="width: {prob_hit*100}%; background-color: {bar_color};"></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748B; margin-top: 6px; font-family: 'JetBrains Mono', monospace;">
-                <span>0% Non-Hit</span>
-                <span>Chegara: 50%</span>
-                <span>100% Hit</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f"""<div class="metric-card">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+<span class="metric-title">Bashorat Statusi</span>
+{status_badge}
+</div>
+<div class="metric-value">{prob_hit:.1%}</div>
+<div class="metric-sub">Hit Bo'lish Ehtimoli (Chegara: 50.0%)</div>
+<div class="prob-track">
+<div class="prob-fill" style="width: {prob_hit*100}%; background-color: {bar_color};"></div>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748B; margin-top: 6px; font-family: 'JetBrains Mono', monospace;">
+<span>0% Non-Hit</span>
+<span>Chegara: 50%</span>
+<span>100% Hit</span>
+</div>
+</div>""", unsafe_allow_html=True)
 
         # Statistical Context Card
-        st.markdown(f"""
-        <div class="metric-card">
-            <span class="metric-title">Model Diagnostikasi</span>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
-                <div>
-                    <div style="font-size: 0.72rem; color: #64748B;">Faol Model</div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #E2E8F0;">{selected_model_name}</div>
-                </div>
-                <div>
-                    <div style="font-size: 0.72rem; color: #64748B;">Ishonch Darajasi</div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #E2E8F0;">{confidence:.1%}</div>
-                </div>
-                <div>
-                    <div style="font-size: 0.72rem; color: #64748B;">Validation ROC-AUC</div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #38BDF8;">{results['optuna_tuned_lgbm']['test_roc_auc'] if 'Optuna' in selected_model_name else results['xgboost']['test_roc_auc']:.4f}</div>
-                </div>
-                <div>
-                    <div style="font-size: 0.72rem; color: #64748B;">Bashorat Tezligi</div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #34D399;">~1.2 ms</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f"""<div class="metric-card">
+<span class="metric-title">Model Diagnostikasi</span>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
+<div>
+<div style="font-size: 0.72rem; color: #64748B;">Faol Model</div>
+<div style="font-size: 0.95rem; font-weight: 600; color: #E2E8F0;">{selected_model_name}</div>
+</div>
+<div>
+<div style="font-size: 0.72rem; color: #64748B;">Ishonch Darajasi</div>
+<div style="font-size: 0.95rem; font-weight: 600; color: #E2E8F0;">{confidence:.1%}</div>
+</div>
+<div>
+<div style="font-size: 0.72rem; color: #64748B;">Validation ROC-AUC</div>
+<div style="font-size: 0.95rem; font-weight: 600; color: #38BDF8;">{results['optuna_tuned_lgbm']['test_roc_auc'] if 'Optuna' in selected_model_name else results['xgboost']['test_roc_auc']:.4f}</div>
+</div>
+<div>
+<div style="font-size: 0.72rem; color: #64748B;">Bashorat Tezligi</div>
+<div style="font-size: 0.95rem; font-weight: 600; color: #34D399;">~1.2 ms</div>
+</div>
+</div>
+</div>""", unsafe_allow_html=True)
 
         # Quick Feature Breakdown
-        st.markdown("""
-        <div style="font-size: 0.8rem; font-weight: 600; color: #94A3B8; margin-top: 8px; margin-bottom: 6px;">
-            Eng Kuchli Ta'sir Etuvchi Omillar
-        </div>
-        <div style="font-size: 0.8rem; color: #64748B; line-height: 1.4;">
-            Daraxtning shoxlanish tahliliga ko'ra, <strong>Reliz yili</strong>, <strong>Ovoz balandligi (loudness)</strong> va <strong>Raqsboplik (danceability)</strong> qaror qabul qilishdagi barcha taqsimotlarning 52% dan ortig'ini tashkil etadi.
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div style="font-size: 0.8rem; font-weight: 600; color: #94A3B8; margin-top: 8px; margin-bottom: 6px;">Eng Kuchli Ta'sir Etuvchi Omillar</div>
+<div style="font-size: 0.8rem; color: #64748B; line-height: 1.4;">
+Daraxtning shoxlanish tahliliga ko'ra, <strong>Reliz yili</strong>, <strong>Ovoz balandligi (loudness)</strong> va <strong>Raqsboplik (danceability)</strong> qaror qabul qilishdagi barcha taqsimotlarning 52% dan ortig'ini tashkil etadi.
+</div>""", unsafe_allow_html=True)
 
 # -------------------------------------------------------------
 # TAB 2: MODEL BENCHMARK
@@ -552,30 +544,16 @@ with tab_overfitting:
 with tab_docs:
     st.markdown("<div style='font-size: 1.1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 16px;'>Texnik Xulosa va Xulosalar</div>", unsafe_allow_html=True)
 
-    st.markdown("""
-    <div style="background: #111827; border: 1px solid #1F2937; border-radius: 8px; padding: 24px; line-height: 1.7; color: #CBD5E1; font-size: 0.92rem;">
-        <ol style="margin: 0; padding-left: 20px;">
-            <li style="margin-bottom: 12px;">
-                <strong>Model Aniqligi:</strong> 32,828 ta trekda o'tkazilgan tahlilda Optuna orqali sozlangan LightGBM eng yuqori natijani (<strong>0.770 ROC-AUC, 70.1% Test Accuracy</strong>) qayd etdi.
-            </li>
-            <li style="margin-bottom: 12px;">
-                <strong>O'qitish Tezligi:</strong> LightGBM XGBoost'dan <strong>3.8 baravar tezroq (0.240s vs 0.928s)</strong> o'qitildi, bu uning Histogram-based binning strategiyasining ustunligini ko'rsatadi.
-            </li>
-            <li style="margin-bottom: 12px;">
-                <strong>Overfitting Nuqtasi:</strong> <code>num_leaves</code> 31 dan oshgach overfitting tezlashadi. 128 dan yuqorida Train aniqligi 99.3% ga chiqadi, Test aniqligi esa 71.4% da to'xtaydi (27.8% farq).
-            </li>
-            <li style="margin-bottom: 12px;">
-                <strong>Overfitting Nazorati:</strong> <code>max_depth=7</code> va <code>min_child_samples=20</code> cheklovlari hamda L2 regulyarizatsiya (<code>reg_lambda=3.27</code>) generalizatsiya farqini barqaror qildi.
-            </li>
-            <li>
-                <strong>Belgilar Ahamiyati:</strong> Qo'shiqning reliz yili (<code>release_year</code>), ovoz balandligi (<code>loudness</code>), davomiyligi (<code>duration_min</code>) va raqsbopligi (<code>danceability</code>) mashhurlikni belgilovchi eng muhim omillardir.
-            </li>
-        </ol>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div style="background: #111827; border: 1px solid #1F2937; border-radius: 8px; padding: 24px; line-height: 1.7; color: #CBD5E1; font-size: 0.92rem;">
+<ol style="margin: 0; padding-left: 20px;">
+<li style="margin-bottom: 12px;"><strong>Model Aniqligi:</strong> 32,828 ta trekda o'tkazilgan tahlilda Optuna orqali sozlangan LightGBM eng yuqori natijani (<strong>0.770 ROC-AUC, 70.1% Test Accuracy</strong>) qayd etdi.</li>
+<li style="margin-bottom: 12px;"><strong>O'qitish Tezligi:</strong> LightGBM XGBoost'dan <strong>3.8 baravar tezroq (0.240s vs 0.928s)</strong> o'qitildi, bu uning Histogram-based binning strategiyasining ustunligini ko'rsatadi.</li>
+<li style="margin-bottom: 12px;"><strong>Overfitting Nuqtasi:</strong> <code>num_leaves</code> 31 dan oshgach overfitting tezlashadi. 128 dan yuqorida Train aniqligi 99.3% ga chiqadi, Test aniqligi esa 71.4% da to'xtaydi (27.8% farq).</li>
+<li style="margin-bottom: 12px;"><strong>Overfitting Nazorati:</strong> <code>max_depth=7</code> va <code>min_child_samples=20</code> cheklovlari hamda L2 regulyarizatsiya (<code>reg_lambda=3.27</code>) generalizatsiya farqini barqaror qildi.</li>
+<li><strong>Belgilar Ahamiyati:</strong> Qo'shiqning reliz yili (<code>release_year</code>), ovoz balandligi (<code>loudness</code>), davomiyligi (<code>duration_min</code>) va raqsbopligi (<code>danceability</code>) mashhurlikni belgilovchi eng muhim omillardir.</li>
+</ol>
+</div>""", unsafe_allow_html=True)
 
-    st.markdown("""
-    <div style="margin-top: 24px; padding: 16px; border: 1px solid #1F2937; border-radius: 6px; font-size: 0.8rem; color: #64748B; font-family: 'JetBrains Mono', monospace;">
-        Environment: Python 3.14.7 | LightGBM 4.7.0 | XGBoost 3.4.1 | Optuna 5.0.0 | Streamlit 1.64.0
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div style="margin-top: 24px; padding: 16px; border: 1px solid #1F2937; border-radius: 6px; font-size: 0.8rem; color: #64748B; font-family: 'JetBrains Mono', monospace;">
+Environment: Python 3.14.7 | LightGBM 4.7.0 | XGBoost 3.4.1 | Optuna 5.0.0 | Streamlit 1.64.0
+</div>""", unsafe_allow_html=True)
