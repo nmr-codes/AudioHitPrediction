@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Minimalist Dark Theme CSS (Zero Emojis, Pure SVG/CSS Minimalist Aesthetics)
+# Custom Minimalist Dark Theme CSS (Zero Emojis, Pure Minimalist Aesthetics)
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -66,6 +66,31 @@ st.markdown("""
         margin-top: 4px;
     }
 
+    /* Instruction Cards */
+    .guide-card {
+        background: #111827;
+        border: 1px solid #1F2937;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 16px;
+    }
+
+    .step-number {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #1E293B;
+        color: #38BDF8;
+        font-weight: 700;
+        font-size: 0.8rem;
+        font-family: 'JetBrains Mono', monospace;
+        margin-right: 8px;
+        border: 1px solid #334155;
+    }
+
     /* Status Badges */
     .badge-hit {
         display: inline-flex;
@@ -112,15 +137,16 @@ st.markdown("""
         border-bottom: 1px solid #1F2937;
     }
     .stTabs [data-baseweb="tab"] {
-        padding: 8px 16px;
+        padding: 10px 18px;
         font-weight: 500;
-        font-size: 0.88rem;
+        font-size: 0.9rem;
         color: #94A3B8;
         border-radius: 6px 6px 0 0;
     }
     .stTabs [aria-selected="true"] {
         color: #38BDF8 !important;
         border-bottom: 2px solid #38BDF8 !important;
+        font-weight: 600;
     }
 
     /* Sidebar Clean */
@@ -182,7 +208,7 @@ with col_head_left:
             Audio Hit Predictor & Model Benchmark
         </h1>
         <p style="font-size: 0.92rem; color: #94A3B8; margin: 0; line-height: 1.5;">
-            Predicting commercial track viability using 32,828 Spotify audio profiles. Comparative analysis between LightGBM and XGBoost with Bayesian parameter optimization.
+            Spotify platformasidagi 32,828 ta qo'shiq audio xususiyatlari asosida musiqiy Hit ehtimolini bashorat qilish va LightGBM vs XGBoost modellarini qiyoslash tizimi.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -190,22 +216,111 @@ with col_head_left:
 with col_head_right:
     st.markdown("""
     <div style="text-align: right; padding-top: 10px;">
-        <div style="font-size: 0.72rem; color: #64748B; text-transform: uppercase; letter-spacing: 0.08em;">Dataset Records</div>
+        <div style="font-size: 0.72rem; color: #64748B; text-transform: uppercase; letter-spacing: 0.08em;">Dataset Hajmi</div>
         <div style="font-size: 1.4rem; font-weight: 700; color: #F8FAFC; font-family: 'JetBrains Mono', monospace;">32,828</div>
-        <div style="font-size: 0.72rem; color: #10B981;">Stratified 80/20 Validation</div>
+        <div style="font-size: 0.72rem; color: #10B981;">Stratified 80/20 Test To'plami</div>
     </div>
     """, unsafe_allow_html=True)
 
-# Navigation Tabs
-tab_predict, tab_benchmark, tab_overfitting, tab_docs = st.tabs([
-    "Live Inference", 
-    "Model Benchmark", 
+# Navigation Tabs (User Guide First)
+tab_guide, tab_predict, tab_benchmark, tab_overfitting, tab_docs = st.tabs([
+    "Foydalanish Qo'llanmasi",
+    "Jonli Bashorat (Inference)", 
+    "Modellar Benchmarki", 
     "Overfitting & Tuning Lab", 
-    "Methodology & Summary"
+    "Texnik Xulosa"
 ])
 
 # -------------------------------------------------------------
-# TAB 1: LIVE INFERENCE
+# TAB 0: USER GUIDE & SYSTEM OVERVIEW (QO'LLANMA)
+# -------------------------------------------------------------
+with tab_guide:
+    st.markdown("<div style='font-size: 1.15rem; font-weight: 700; color: #F8FAFC; margin-bottom: 14px;'>Loyiha Haqida va Foydalanish Bo'yicha To'liq Qo'llanma</div>", unsafe_allow_html=True)
+
+    col_g1, col_g2 = st.columns(2, gap="large")
+
+    with col_g1:
+        st.markdown("""
+        <div class="guide-card">
+            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #38BDF8; margin-bottom: 8px;">
+                1. Ushbu Tizim Nima?
+            </div>
+            <p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; margin-bottom: 12px;">
+                Ushbu loyiha Spotify musiqa platformasidagi <strong>32,828 ta haqiqiy treklar</strong> ma'lumotlar to'plami asosida yaratilgan. Har bir qo'shiqning raqsbopligi (danceability), energiyasi (energy), ovoz balandligi (loudness), akustikligi va reliz yili kabi 14 ta belgisi o'rganilib, qo'shiqning <strong>Hit (mashhur: Popularity &ge; 50)</strong> bo'lish ehtimoli bashorat qilinadi.
+            </p>
+            <p style="font-size: 0.88rem; color: #94A3B8; line-height: 1.6;">
+                Tizimda <strong>LightGBM</strong> va <strong>XGBoost</strong> gradient boosting algoritmlari taqqoslangan, daraxt barglari soni (<code>num_leaves</code>) bo'yicha overfitting chegarasi aniqlangan hamda <strong>Optuna</strong> (Bayesian optimization) orqali eng optimal parametrlar topilgan.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="guide-card">
+            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #34D399; margin-bottom: 8px;">
+                3. Akustik Ko'rsatkichlar Izohi
+            </div>
+            <ul style="font-size: 0.85rem; color: #CBD5E1; line-height: 1.7; padding-left: 18px; margin: 0;">
+                <li><strong>Danceability (0 - 1.0):</strong> Qo'shiqning raqsga tushishga qulaylik darajasi (ritm, temp va barqarorlik).</li>
+                <li><strong>Energy (0 - 1.0):</strong> Treklardagi tezlik, intensivlik va shovqin miqdori.</li>
+                <li><strong>Loudness (-30 dan 1 dB):</strong> Umumiy ovoz balandligi. Odatda zamonaviy xitlar -6 dB dan balandroq bo'ladi.</li>
+                <li><strong>Valence (0 - 1.0):</strong> Musiqiy kayfiyat. Yuqori qiymat shodlik va optimizmni, past qiymat esa g'amginlikni anglatadi.</li>
+                <li><strong>Acousticness (0 - 1.0):</strong> Trekda akustik asboblar ustunligi (elektron asboblarga qarama-qarshi).</li>
+                <li><strong>Tempo (BPM):</strong> Trekning daqiqadagi zarbalar soni (Beats Per Minute).</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col_g2:
+        st.markdown("""
+        <div class="guide-card">
+            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #F59E0B; margin-bottom: 12px;">
+                2. Qadam-baqadam Foydalanish Yo'riqnomasi
+            </div>
+            
+            <div style="margin-bottom: 14px;">
+                <span class="step-number">1</span>
+                <strong style="color: #F8FAFC; font-size: 0.88rem;">Modelni tanlang:</strong>
+                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
+                    Chap paneldagi <em>"Active Estimator"</em> orqali <strong>Optuna-Tuned LightGBM</strong> (eng aniq: 70.1% Acc, 0.770 AUC), <strong>XGBoost</strong> yoki <strong>Baseline LightGBM</strong> ni faollashtiring.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <span class="step-number">2</span>
+                <strong style="color: #F8FAFC; font-size: 0.88rem;">Parametrlarni kiriting yoki Blueprint tanlang:</strong>
+                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
+                    <em>"Jonli Bashorat"</em> sahifasiga o'tib, tayyor shablonni (masalan: <em>Viral Pop Anthem</em>, <em>Club EDM Peak</em>) tanlang yoki slayderlar orqali o'z trekingiz qiymatlarini belgilang.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <span class="step-number">3</span>
+                <strong style="color: #F8FAFC; font-size: 0.88rem;">Natijani tekshiring:</strong>
+                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
+                    O'ng paneldagi <em>"Inference Result"</em> kartasida model qo'shiqning Hit bo'lish foizini hisoblaydi (&ge;50% bo'lsa <strong>HIT CANDIDATE</strong> statusi beriladi).
+                </p>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <span class="step-number">4</span>
+                <strong style="color: #F8FAFC; font-size: 0.88rem;">Modellar tahlilini ko'ring:</strong>
+                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
+                    <em>"Modellar Benchmarki"</em> va <em>"Overfitting Lab"</em> bo'limlariga o'tib, metrikalar, o'qitish tezligi (soniyada) va overfitting grafiklarini o'rganing.
+                </p>
+            </div>
+
+            <div>
+                <span class="step-number">5</span>
+                <strong style="color: #F8FAFC; font-size: 0.88rem;">Jupyter Notebook (practise.ipynb):</strong>
+                <p style="font-size: 0.83rem; color: #94A3B8; margin: 4px 0 0 32px;">
+                    Loyiha papkasida <code>practise.ipynb</code> fayli mavjud. Unda barcha hisoblashlar, o'qitish skriptlari va chizmalar to'liq saqlangan bo'lib, mustaqil qayta ishga tushirish mumkin.
+                </p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+# -------------------------------------------------------------
+# TAB 1: LIVE INFERENCE (JONLI BASHORAT)
 # -------------------------------------------------------------
 with tab_predict:
     # Sidebar Model & Preset Selection
@@ -248,37 +363,37 @@ with tab_predict:
     col_inputs, col_output = st.columns([3, 2], gap="large")
 
     with col_inputs:
-        st.markdown("<div style='font-size: 0.9rem; font-weight: 600; color: #E2E8F0; margin-bottom: 12px;'>Acoustic Feature Vector</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size: 0.9rem; font-weight: 600; color: #E2E8F0; margin-bottom: 12px;'>Acoustic Feature Vector (Trek Parametrlari)</div>", unsafe_allow_html=True)
         
         row1_1, row1_2 = st.columns(2)
         with row1_1:
-            danceability = st.slider("Danceability", 0.0, 1.0, float(p_dance), 0.01)
-            energy = st.slider("Energy", 0.0, 1.0, float(p_energy), 0.01)
-            valence = st.slider("Valence (Musical Positiveness)", 0.0, 1.0, float(p_val), 0.01)
-            acousticness = st.slider("Acousticness", 0.0, 1.0, float(p_acoust), 0.01)
+            danceability = st.slider("Danceability (Raqsboplik)", 0.0, 1.0, float(p_dance), 0.01)
+            energy = st.slider("Energy (Energetiklik)", 0.0, 1.0, float(p_energy), 0.01)
+            valence = st.slider("Valence (Musiqiy Kayfiyat)", 0.0, 1.0, float(p_val), 0.01)
+            acousticness = st.slider("Acousticness (Akustiklik)", 0.0, 1.0, float(p_acoust), 0.01)
         with row1_2:
-            loudness = st.slider("Loudness (dB)", -30.0, 1.0, float(p_loud), 0.5)
+            loudness = st.slider("Loudness (Ovoz balandligi dB)", -30.0, 1.0, float(p_loud), 0.5)
             tempo = st.slider("Tempo (BPM)", 50.0, 220.0, float(p_tempo), 1.0)
-            speechiness = st.slider("Speechiness", 0.0, 1.0, 0.07, 0.01)
-            instrumentalness = st.slider("Instrumentalness", 0.0, 1.0, 0.00, 0.01)
+            speechiness = st.slider("Speechiness (Vokal / Matn)", 0.0, 1.0, 0.07, 0.01)
+            instrumentalness = st.slider("Instrumentalness (Sozlik)", 0.0, 1.0, 0.00, 0.01)
 
         row2_1, row2_2, row2_3 = st.columns(3)
         with row2_1:
-            genre = st.selectbox("Primary Genre", genres, index=genres.index(p_genre) if p_genre in genres else 0)
+            genre = st.selectbox("Asosiy Janr", genres, index=genres.index(p_genre) if p_genre in genres else 0)
         with row2_2:
-            release_year = st.number_input("Release Year", min_value=1950, max_value=2026, value=int(p_year), step=1)
+            release_year = st.number_input("Reliz Yili", min_value=1950, max_value=2026, value=int(p_year), step=1)
         with row2_3:
-            duration_min = st.number_input("Duration (Minutes)", min_value=1.0, max_value=12.0, value=3.25, step=0.1)
+            duration_min = st.number_input("Davomiyligi (Daqiqa)", min_value=1.0, max_value=12.0, value=3.25, step=0.1)
 
         # Advanced Toggle
-        with st.expander("Secondary Modal Features"):
+        with st.expander("Qo'shimcha Modal Xususiyatlar"):
             col_adv1, col_adv2, col_adv3 = st.columns(3)
             with col_adv1:
-                key = st.selectbox("Key (Pitch Class)", list(range(12)), index=5)
+                key = st.selectbox("Tonal Kalit (Key)", list(range(12)), index=5)
             with col_adv2:
-                mode = st.selectbox("Mode", [1, 0], format_func=lambda x: "Major" if x == 1 else "Minor")
+                mode = st.selectbox("Tonal Rejim (Mode)", [1, 0], format_func=lambda x: "Major" if x == 1 else "Minor")
             with col_adv3:
-                liveness = st.slider("Liveness", 0.0, 1.0, 0.12, 0.01)
+                liveness = st.slider("Jonli Ijro (Liveness)", 0.0, 1.0, 0.12, 0.01)
 
     # Feature Assembly and Prediction
     genre_encoded = le_genre.transform([genre])[0]
@@ -305,7 +420,6 @@ with tab_predict:
     elif selected_model_name == "XGBoost (Hist)":
         active_clf = xgb_model
     else:
-        # Default baseline
         active_clf = lgbm_model
 
     prob_hit = float(active_clf.predict_proba(input_vector)[0][1])
@@ -313,7 +427,7 @@ with tab_predict:
     confidence = prob_hit if is_hit else (1.0 - prob_hit)
 
     with col_output:
-        st.markdown("<div style='font-size: 0.9rem; font-weight: 600; color: #E2E8F0; margin-bottom: 12px;'>Inference Result</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size: 0.9rem; font-weight: 600; color: #E2E8F0; margin-bottom: 12px;'>Inference Result (Bashorat Natijasi)</div>", unsafe_allow_html=True)
         
         status_badge = f'<span class="badge-hit">HIT CANDIDATE</span>' if is_hit else f'<span class="badge-miss">SUB-THRESHOLD</span>'
         bar_color = "#10B981" if is_hit else "#EF4444"
@@ -321,17 +435,17 @@ with tab_predict:
         st.markdown(f"""
         <div class="metric-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <span class="metric-title">Prediction Classification</span>
+                <span class="metric-title">Bashorat Statusi</span>
                 {status_badge}
             </div>
             <div class="metric-value">{prob_hit:.1%}</div>
-            <div class="metric-sub">Hit Probability (Threshold: 50.0%)</div>
+            <div class="metric-sub">Hit Bo'lish Ehtimoli (Chegara: 50.0%)</div>
             <div class="prob-track">
                 <div class="prob-fill" style="width: {prob_hit*100}%; background-color: {bar_color};"></div>
             </div>
             <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748B; margin-top: 6px; font-family: 'JetBrains Mono', monospace;">
                 <span>0% Non-Hit</span>
-                <span>Threshold: 50%</span>
+                <span>Chegara: 50%</span>
                 <span>100% Hit</span>
             </div>
         </div>
@@ -340,14 +454,14 @@ with tab_predict:
         # Statistical Context Card
         st.markdown(f"""
         <div class="metric-card">
-            <span class="metric-title">Model Diagnostics</span>
+            <span class="metric-title">Model Diagnostikasi</span>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
                 <div>
-                    <div style="font-size: 0.72rem; color: #64748B;">Active Architecture</div>
+                    <div style="font-size: 0.72rem; color: #64748B;">Faol Model</div>
                     <div style="font-size: 0.95rem; font-weight: 600; color: #E2E8F0;">{selected_model_name}</div>
                 </div>
                 <div>
-                    <div style="font-size: 0.72rem; color: #64748B;">Decision Confidence</div>
+                    <div style="font-size: 0.72rem; color: #64748B;">Ishonch Darajasi</div>
                     <div style="font-size: 0.95rem; font-weight: 600; color: #E2E8F0;">{confidence:.1%}</div>
                 </div>
                 <div>
@@ -355,7 +469,7 @@ with tab_predict:
                     <div style="font-size: 0.95rem; font-weight: 600; color: #38BDF8;">{results['optuna_tuned_lgbm']['test_roc_auc'] if 'Optuna' in selected_model_name else results['xgboost']['test_roc_auc']:.4f}</div>
                 </div>
                 <div>
-                    <div style="font-size: 0.72rem; color: #64748B;">Inference Latency</div>
+                    <div style="font-size: 0.72rem; color: #64748B;">Bashorat Tezligi</div>
                     <div style="font-size: 0.95rem; font-weight: 600; color: #34D399;">~1.2 ms</div>
                 </div>
             </div>
@@ -365,10 +479,10 @@ with tab_predict:
         # Quick Feature Breakdown
         st.markdown("""
         <div style="font-size: 0.8rem; font-weight: 600; color: #94A3B8; margin-top: 8px; margin-bottom: 6px;">
-            Feature Dominance Factors
+            Eng Kuchli Ta'sir Etuvchi Omillar
         </div>
         <div style="font-size: 0.8rem; color: #64748B; line-height: 1.4;">
-            Historical model tree splits demonstrate that <strong>Release Year</strong>, <strong>Loudness</strong>, and <strong>Danceability</strong> account for over 52% of all branching decisions in the optimal estimator.
+            Daraxtning shoxlanish tahliliga ko'ra, <strong>Reliz yili</strong>, <strong>Ovoz balandligi (loudness)</strong> va <strong>Raqsboplik (danceability)</strong> qaror qabul qilishdagi barcha taqsimotlarning 52% dan ortig'ini tashkil etadi.
         </div>
         """, unsafe_allow_html=True)
 
@@ -376,7 +490,7 @@ with tab_predict:
 # TAB 2: MODEL BENCHMARK
 # -------------------------------------------------------------
 with tab_benchmark:
-    st.markdown("<div style='font-size: 1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 14px;'>Empirical Benchmark: LightGBM vs XGBoost</div>", unsafe_allow_html=True)
+    st.markdown("<div style='font-size: 1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 14px;'>Modellarning Qiyosiy Benchmarki: LightGBM vs XGBoost</div>", unsafe_allow_html=True)
     
     # Quantitative Comparison Table
     b_lgbm = results['baseline_lgbm']
@@ -386,36 +500,36 @@ with tab_benchmark:
 
     bench_df = pd.DataFrame([
         {
-            "Estimator": "LightGBM (Baseline)",
-            "Train Accuracy": f"{b_lgbm['train_accuracy']:.4f}",
-            "Test Accuracy": f"{b_lgbm['test_accuracy']:.4f}",
+            "Model": "LightGBM (Baseline)",
+            "Train Acc": f"{b_lgbm['train_accuracy']:.4f}",
+            "Test Acc": f"{b_lgbm['test_accuracy']:.4f}",
             "Test ROC-AUC": f"{b_lgbm['test_roc_auc']:.4f}",
             "Gen. Gap": f"{(b_lgbm['train_accuracy'] - b_lgbm['test_accuracy']):.4f}",
-            "Training Time": f"{b_lgbm['training_time_sec']:.3f}s"
+            "O'qitish Vaqti": f"{b_lgbm['training_time_sec']:.3f}s"
         },
         {
-            "Estimator": "LightGBM (Controlled: depth=7, min_child=20)",
-            "Train Accuracy": f"{grid_best['train_acc']:.4f}",
-            "Test Accuracy": f"{grid_best['test_acc']:.4f}",
+            "Model": "LightGBM (Controlled: depth=7, min_child=20)",
+            "Train Acc": f"{grid_best['train_acc']:.4f}",
+            "Test Acc": f"{grid_best['test_acc']:.4f}",
             "Test ROC-AUC": f"{grid_best['test_auc']:.4f}",
             "Gen. Gap": f"{grid_best['acc_gap']:.4f}",
-            "Training Time": "0.220s"
+            "O'qitish Vaqti": "0.220s"
         },
         {
-            "Estimator": "XGBoost (Hist Tree Method)",
-            "Train Accuracy": f"{m_xgb['train_accuracy']:.4f}",
-            "Test Accuracy": f"{m_xgb['test_accuracy']:.4f}",
+            "Model": "XGBoost (Hist Tree Method)",
+            "Train Acc": f"{m_xgb['train_accuracy']:.4f}",
+            "Test Acc": f"{m_xgb['test_accuracy']:.4f}",
             "Test ROC-AUC": f"{m_xgb['test_roc_auc']:.4f}",
             "Gen. Gap": f"{(m_xgb['train_accuracy'] - m_xgb['test_accuracy']):.4f}",
-            "Training Time": f"{m_xgb['training_time_sec']:.3f}s"
+            "O'qitish Vaqti": f"{m_xgb['training_time_sec']:.3f}s"
         },
         {
-            "Estimator": "Optuna-Tuned LightGBM (30-trial Bayesian)",
-            "Train Accuracy": f"{o_lgbm['train_accuracy']:.4f}",
-            "Test Accuracy": f"{o_lgbm['test_accuracy']:.4f}",
+            "Model": "Optuna-Tuned LightGBM (Bayesian)",
+            "Train Acc": f"{o_lgbm['train_accuracy']:.4f}",
+            "Test Acc": f"{o_lgbm['test_accuracy']:.4f}",
             "Test ROC-AUC": f"{o_lgbm['test_roc_auc']:.4f}",
             "Gen. Gap": f"{o_lgbm['generalization_gap']:.4f}",
-            "Training Time": f"{o_lgbm['training_time_sec']:.3f}s"
+            "O'qitish Vaqti": f"{o_lgbm['training_time_sec']:.3f}s"
         }
     ])
 
@@ -424,66 +538,65 @@ with tab_benchmark:
     col_chart1, col_chart2 = st.columns(2)
     with col_chart1:
         if os.path.exists('assets/lgbm_vs_xgboost.png'):
-            st.image('assets/lgbm_vs_xgboost.png', caption="Metric Scores and Training Speed Comparison", use_container_width=True)
+            st.image('assets/lgbm_vs_xgboost.png', caption="Metrikalar va O'qitish Tezligi Solishtiruvi")
     with col_chart2:
         if os.path.exists('assets/feature_importances.png'):
-            st.image('assets/feature_importances.png', caption="Feature Importances by Tree Split Count", use_container_width=True)
+            st.image('assets/feature_importances.png', caption="Belgilarning Muhimlik Darajasi (Split Count)")
 
 # -------------------------------------------------------------
 # TAB 3: OVERFITTING & TUNING LAB
 # -------------------------------------------------------------
 with tab_overfitting:
-    st.markdown("<div style='font-size: 1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 14px;'>Hyperparameter Dynamics & Overfitting Trajectory</div>", unsafe_allow_html=True)
+    st.markdown("<div style='font-size: 1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 14px;'>Gipoparametrlar Dinamikasi va Overfitting Traektoriyasi</div>", unsafe_allow_html=True)
     
     st.markdown("""
     <p style="font-size: 0.88rem; color: #94A3B8; line-height: 1.5;">
-        As <code>num_leaves</code> increases, the LightGBM leaf-wise splitting algorithm achieves exponential expressiveness. 
-        However, beyond 31 leaves, the model begins memorizing idiosyncratic noise in the training sample, yielding a widening Generalization Gap.
+        <code>num_leaves</code> barglar soni oshgani sari LightGBM ning o'rganish kuchi ortadi. Biroq 31 bargdan oshganda model sinov to'plamidagi shovqinlarni yodlab ola boshlaydi va <strong>Generalization Gap</strong> (Train va Test farqi) keskin kengayadi.
     </p>
     """, unsafe_allow_html=True)
 
     col_over1, col_over2 = st.columns(2)
     with col_over1:
         if os.path.exists('assets/num_leaves_overfitting.png'):
-            st.image('assets/num_leaves_overfitting.png', caption="Divergence of Train vs Test Accuracy with num_leaves", use_container_width=True)
+            st.image('assets/num_leaves_overfitting.png', caption="num_leaves bo'yicha Train vs Test Divergensiyasi")
     with col_over2:
         if os.path.exists('assets/overfitting_control_heatmap.png'):
-            st.image('assets/overfitting_control_heatmap.png', caption="Grid Search Heatmap (max_depth x min_child_samples)", use_container_width=True)
+            st.image('assets/overfitting_control_heatmap.png', caption="Grid Search Heatmap (max_depth x min_child_samples)")
 
     st.markdown("<hr style='border-color: #1F2937; margin: 20px 0;'>", unsafe_allow_html=True)
-    st.markdown("<div style='font-size: 1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 14px;'>Bayesian Optimization Progression (Optuna)</div>", unsafe_allow_html=True)
+    st.markdown("<div style='font-size: 1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 14px;'>Optuna Avtomatik Optimallashuvi (Bayesian Tuning)</div>", unsafe_allow_html=True)
 
     col_opt_img, col_opt_params = st.columns([3, 2])
     with col_opt_img:
         if os.path.exists('assets/optuna_optimization_history.png'):
-            st.image('assets/optuna_optimization_history.png', caption="Objective Value Progression Across 30 Trials", use_container_width=True)
+            st.image('assets/optuna_optimization_history.png', caption="30 ta Sinov Bo'yicha Maqsad Funksiyasi O'sishi")
     with col_opt_params:
-        st.markdown("<div style='font-size: 0.85rem; font-weight: 600; color: #E2E8F0; margin-bottom: 8px;'>Best Hyperparameter Vector</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size: 0.85rem; font-weight: 600; color: #E2E8F0; margin-bottom: 8px;'>Optuna Eng Yaxshi Parametrlari</div>", unsafe_allow_html=True)
         st.json(o_lgbm['best_params'])
 
 # -------------------------------------------------------------
 # TAB 4: METHODOLOGY & SUMMARY
 # -------------------------------------------------------------
 with tab_docs:
-    st.markdown("<div style='font-size: 1.1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 16px;'>Executive Technical Summary</div>", unsafe_allow_html=True)
+    st.markdown("<div style='font-size: 1.1rem; font-weight: 600; color: #F8FAFC; margin-bottom: 16px;'>Texnik Xulosa va Xulosalar</div>", unsafe_allow_html=True)
 
     st.markdown("""
     <div style="background: #111827; border: 1px solid #1F2937; border-radius: 8px; padding: 24px; line-height: 1.7; color: #CBD5E1; font-size: 0.92rem;">
         <ol style="margin: 0; padding-left: 20px;">
             <li style="margin-bottom: 12px;">
-                <strong>Architectural Performance:</strong> The Optuna-tuned LightGBM estimator established peak predictive power, achieving a <strong>0.770 ROC-AUC</strong> and <strong>70.1% test accuracy</strong> across 6,566 out-of-fold validation tracks.
+                <strong>Model Aniqligi:</strong> 32,828 ta trekda o'tkazilgan tahlilda Optuna orqali sozlangan LightGBM eng yuqori natijani (<strong>0.770 ROC-AUC, 70.1% Test Accuracy</strong>) qayd etdi.
             </li>
             <li style="margin-bottom: 12px;">
-                <strong>Computational Efficiency:</strong> LightGBM demonstrated a <strong>3.8x training speed advantage</strong> over XGBoost (0.240s vs 0.928s), validating the throughput superiority of gradient-based one-side sampling and histogram binning on high-cardinality tabular datasets.
+                <strong>O'qitish Tezligi:</strong> LightGBM XGBoost'dan <strong>3.8 baravar tezroq (0.240s vs 0.928s)</strong> o'qitildi, bu uning Histogram-based binning strategiyasining ustunligini ko'rsatadi.
             </li>
             <li style="margin-bottom: 12px;">
-                <strong>Overfitting Inflection Point:</strong> The empirical <code>num_leaves</code> experiment revealed that variance inflation begins when exceeding 31 leaves. At 128 to 512 leaves, the estimator collapsed into empirical memorization, driving training accuracy to 99.3% while test accuracy stagnated at 71.4%.
+                <strong>Overfitting Nuqtasi:</strong> <code>num_leaves</code> 31 dan oshgach overfitting tezlashadi. 128 dan yuqorida Train aniqligi 99.3% ga chiqadi, Test aniqligi esa 71.4% da to'xtaydi (27.8% farq).
             </li>
             <li style="margin-bottom: 12px;">
-                <strong>Variance Regularization:</strong> Enforcing <code>max_depth=7</code> paired with <code>min_child_samples=20</code> and L2 regularization (<code>reg_lambda=3.27</code>) successfully contracted the generalization gap by 62% without sacrificing test discriminability.
+                <strong>Overfitting Nazorati:</strong> <code>max_depth=7</code> va <code>min_child_samples=20</code> cheklovlari hamda L2 regulyarizatsiya (<code>reg_lambda=3.27</code>) generalizatsiya farqini barqaror qildi.
             </li>
             <li>
-                <strong>Feature Hierarchy:</strong> Split importance attribution indicates that acoustic metadata (<code>release_year</code>, <code>loudness</code>, <code>danceability</code>, and <code>duration_min</code>) carry dominant signal weight, while tonal keys and modes exhibit minimal marginal contribution.
+                <strong>Belgilar Ahamiyati:</strong> Qo'shiqning reliz yili (<code>release_year</code>), ovoz balandligi (<code>loudness</code>), davomiyligi (<code>duration_min</code>) va raqsbopligi (<code>danceability</code>) mashhurlikni belgilovchi eng muhim omillardir.
             </li>
         </ol>
     </div>
